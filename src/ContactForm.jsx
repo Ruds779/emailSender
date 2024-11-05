@@ -31,7 +31,14 @@ export default function ContactForm() {
   }
   return (
     <>
-      <form action="">
+      <button
+        onClick={async () => {
+          await fetch("/api/email", { method: "POST" });
+        }}
+      >
+        Send email
+      </button>
+      {/* <form action="">
         <label
           htmlFor="email"
           className="flex self-center block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
@@ -89,7 +96,7 @@ export default function ContactForm() {
         >
           Send message
         </button>
-      </form>
+      </form> */}
     </>
   );
 }
