@@ -1,25 +1,27 @@
-import Template from "../../Template";
-
 // const express = require("express");
 // const nodemailer = require("nodemailer");
 // const cors = require("cors");
 //const uploadImage = require("./uploadImage.js");
 // const app = express();
 // const port = 5000;
-const { Resend } = require("resend");
-require("dotenv").config();
+import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend("re_EXSiXfQN_JT7HbPG2izZxTj4ExEb6URN8");
 
-export async function POST() {
-  await resend.emails.send({
-    from: "onboarding@resend.dev",
-    to: "rudsfoon@gmail.com",
-    subject: "Hello world",
-    react: <Template name="Rudo" />,
+(async function POST() {
+  const { data, error } = await resend.emails.send({
+    from: "Acme <onboarding@resend.dev>",
+    to: ["rudsfoon@gmail.com"],
+    subject: "Hello World",
+    html: "<strong>It works!</strong>",
   });
-}
 
+  if (error) {
+    return console.error({ error });
+  }
+
+  console.log({ data });
+})();
 // app.use(cors());
 // app.use(express.json({ limit: "25mb" }));
 // app.use(express.urlencoded({ limit: "25mb" }));

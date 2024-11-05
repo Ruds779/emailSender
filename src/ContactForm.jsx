@@ -7,6 +7,7 @@ export default function ContactForm() {
   const [recipient_email, setEmail] = useState("");
   const [subject, setSubject] = useState("");
   const [message, setMessages] = useState("");
+  const [status, setStatus] = useState(null);
 
   function sendMail() {
     console.log("Sending Email");
@@ -17,7 +18,7 @@ export default function ContactForm() {
       localStorage.setItem("subject", subject);
       localStorage.setItem("message", message);
       axios
-        .post("http://localhost:5000/send_email", {
+        .post("https://b0l1tp18-5000.inc1.devtunnels.ms/send_email", {
           recipient_email: recipient_email,
           subject: subject,
           message: message,
@@ -31,14 +32,7 @@ export default function ContactForm() {
   }
   return (
     <>
-      <button
-        onClick={async () => {
-          await fetch("/api/email", { method: "POST" });
-        }}
-      >
-        Send email
-      </button>
-      {/* <form action="">
+      <form action="">
         <label
           htmlFor="email"
           className="flex self-center block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
@@ -90,13 +84,14 @@ export default function ContactForm() {
           ></textarea>
         </div>
         <br />
+
         <button
           onClick={() => sendMail()}
           className="py-3 px-5 m-10 text-sm font-medium text-center text-white rounded-lg bg-primary-700 sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
         >
           Send message
         </button>
-      </form> */}
+      </form>
     </>
   );
 }
