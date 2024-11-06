@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import axios from "axios";
 import { Resend } from "resend";
-
+import email from "./Email";
 export default function ContactForm() {
   const [recipient_email, setEmail] = useState("");
   const [subject, setSubject] = useState("");
@@ -18,7 +18,7 @@ export default function ContactForm() {
       localStorage.setItem("subject", subject);
       localStorage.setItem("message", message);
       axios
-        .post("https://b0l1tp18-5000.inc1.devtunnels.ms/send_email", {
+        .post("/api/email", {
           recipient_email: recipient_email,
           subject: subject,
           message: message,
