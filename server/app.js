@@ -18,6 +18,22 @@ app.use((req, res, next) => {
 //env veriables
 var userEmail = process.env.REACT_APP_SENDER_EMAIL;
 var userPass = process.env.REACT_APP_APPLICATION_PASSWORD;
+const resend = new Resend(process.env.REACT_APP_RESEND_API_KEY);
+
+async function sendResend() {
+  const { data, error } = await resend.emails.send({
+    from: "Acme <onboarding@resend.dev>",
+    to: ["rudsfoon@gmail.com"],
+    subject: "Hello World",
+    html: "<strong>It works!</strong>",
+  });
+
+  if (error) {
+    return console.error({ error });
+  }
+
+  console.log({ data });
+}
 
 function sendEmail({ recipient_email, subject, message }) {
   return new Promise((resolve, reject) => {
@@ -45,12 +61,14 @@ function sendEmail({ recipient_email, subject, message }) {
   });
 }
 app.get("/", (req, res) => {
-  sendEmail()
+  //sendEmail()
+  sendResend()
     .then((response) => res.send(response.message))
     .catch((error) => res.status(500).send(error.message));
 });
 app.post("/send_email", (req, res) => {
-  sendEmail(req.body)
+  sendResend(req.body)
+    //sendEmail(req.body)
     .then((response) => res.send(response.message))
     .catch((error) => res.status(500).send(error.message));
 });

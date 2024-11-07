@@ -1,14 +1,9 @@
 import logo from "./logo.svg";
 import "./App.css";
+import handler from "./route";
 import ContactForm from "./ContactForm";
+import { useEffect } from "react";
 
-function App() {
-  return (
-    <div className="App">
-      <ContactForm />
-      <p></p>
-    </div>
-  );
+export default function App() {
+  return <ContactForm />;
 }
-
-export default App;
