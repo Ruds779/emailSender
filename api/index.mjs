@@ -18,7 +18,7 @@ async function sendResend() {
   console.log({ data });
 }
 
-app.get("/", (req, res) => res.send("Express on Vercel"));
+app.get("/", (res) => res.send("Express on Vercel"));
 
 app.post("/", (req, res) => {
   sendResend(req.body)
