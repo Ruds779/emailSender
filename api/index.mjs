@@ -4,12 +4,12 @@ import { Resend } from "resend";
 const app = express();
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-async function sendResend() {
+async function sendResend({ recipient_email, subject, message }) {
   const { data, error } = await resend.emails.send({
     from: "Acme <onboarding@resend.dev>",
-    to: ["rudsfoon@gmail.com"],
-    subject: "Hello World",
-    html: "<strong>It works!</strong>",
+    to: recipient_email,
+    subject: subject,
+    html: message,
   });
 
   if (error) {
