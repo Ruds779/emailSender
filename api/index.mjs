@@ -1,6 +1,8 @@
-const express = require("express");
+//const express = require("express");
+import express from "express";
+import { Resend } from "resend";
 const app = express();
-const { Resend } = require("resend");
+//const { Resend } = require("resend");
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 async function sendResend() {
