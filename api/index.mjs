@@ -25,7 +25,7 @@ async function sendResend() {
 app.get("/", (req, res) => res.send("Express on Vercel"));
 
 // POST endpoint to send email
-app.post("/", async (req, res) => {
+app.post("/sendResend", async (req, res) => {
   try {
     const response = await sendResend(req.body);
     if (response.success) {

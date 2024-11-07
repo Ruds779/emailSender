@@ -18,7 +18,7 @@ export default function ContactForm() {
       localStorage.setItem("subject", subject);
       localStorage.setItem("message", message);
       axios
-        .post("api/", {
+        .post("/api", {
           recipient_email: recipient_email,
           subject: subject,
           message: message,
