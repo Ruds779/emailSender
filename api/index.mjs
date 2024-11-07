@@ -1,8 +1,7 @@
-//const express = require("express");
 import express from "express";
 import { Resend } from "resend";
+
 const app = express();
-//const { Resend } = require("resend");
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 async function sendResend() {
@@ -14,21 +13,33 @@ async function sendResend() {
   });
 
   if (error) {
-    return console.error({ error });
+    console.error("Error:", error);
+    return { success: false, error };
   }
 
-  console.log({ data });
+  console.log("Email Sent:", data);
+  return { success: true, data };
 }
 
-app.get("/", (res) => res.send("Express on Vercel"));
+// Root endpoint for GET
+app.get("/", (req, res) => res.send("Express on Vercel"));
 
-app.post("/", (req, res) => {
-  sendResend(req.body)
-    //sendEmail(req.body)
-    .then((response) => res.send(response.message))
-    .catch((error) => res.status(500).send(error.message));
+// POST endpoint to send email
+app.post("/", async (req, res) => {
+  try {
+    const response = await sendResend(req.body);
+    if (response.success) {
+      res.send(response.data);
+    } else {
+      res.status(500).send(response.error);
+    }
+  } catch (error) {
+    res.status(500).send("Internal Server Error");
+  }
 });
 
+// Start the server on port 3000
 app.listen(3000, () => console.log("Server ready on port 3000."));
 
-module.exports = app;
+// Export the app for serverless environments like Vercel
+export default app;
