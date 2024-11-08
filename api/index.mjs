@@ -2,6 +2,7 @@ import express from "express";
 import { Resend } from "resend";
 
 const app = express();
+app.use(express.urlencoded({ extended: true }));
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 async function sendResend({ recipient_email, subject, message }) {

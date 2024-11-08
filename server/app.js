@@ -9,7 +9,8 @@ require("dotenv").config();
 
 app.use(cors());
 app.use(express.json({ limit: "25mb" }));
-app.use(express.urlencoded({ limit: "25mb" }));
+//app.use(express.urlencoded({ limit: "25mb" }));
+app.use(express.urlencoded({ extended: true }));
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   next();
@@ -20,12 +21,12 @@ var userEmail = process.env.REACT_APP_SENDER_EMAIL;
 var userPass = process.env.REACT_APP_APPLICATION_PASSWORD;
 const resend = new Resend(process.env.REACT_APP_RESEND_API_KEY);
 
-async function sendResend() {
+async function sendResend({ recipient_email, subject, message }) {
   const { data, error } = await resend.emails.send({
-    from: "Acme <onboarding@resend.dev>",
-    to: ["rudsfoon@gmail.com"],
-    subject: "Hello World",
-    html: "<strong>It works!</strong>",
+    from: "Chris-Law <noreply@chris-law.co.za>",
+    to: [recipient_email],
+    subject: subject,
+    html: message,
   });
 
   if (error) {
